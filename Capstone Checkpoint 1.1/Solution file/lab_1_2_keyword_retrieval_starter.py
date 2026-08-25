@@ -1,8 +1,19 @@
-"""Lab 1.2 (STARTER) — keyword retrieval over the company emails with BM25.
+"""Module 1: keyword retrieval over the wikipedia text with BM25.
 
-Run:  python lab_1_2_keyword_retrieval_starter.py <emails_dir>
+Developer: Gaurav Singh, 08/24/2026
+git- https://github.com/merasupermarket/RAG-WITH-MIT-XPRO
 
-Your job (see the Lab 1.2 walkthrough):
+Setup
+-----
+1. create directory 'WikiFiles' in this folder and place the Wikipedia text files (one .txt per article) in it. 
+2. for this lab, you can use the provided 2022_US_elections.txt file. 
+3. You can also extract more Wikipedia articles using the provided WikiExtract.py script.
+
+
+
+Run:  python lab_1_2_keyword_retrieval_starter.py <wikipedia_files_folder>
+
+How it works 
   - Step 1: Implement tokenize() — lowercase the input, split into tokens, and drop stopwords.
   - Step 2: Implement Bm25Retriever.getTopK() and retrievedContext().
 The BaseRetriever base class, the chat loop, and the index loading are provided.
@@ -22,20 +33,26 @@ Setup
        OPENROUTER_API_KEY=sk-or-your-key-here
    (or set it in your shell —  Windows:  setx OPENROUTER_API_KEY sk-or-...
     macOS/Linux:  export OPENROUTER_API_KEY=sk-or-...)
-3. Email data: Place the company email files (one .txt per email) in a folder
-   named 'detailedEmails' in this directory, or pass a folder path as the first
+3. Wikipedia data: Place the Wikipedia text files (one .txt per article) in a folder
+   named 'WikiFiles' in this directory, or pass a folder path as the first
    argument. The folder MUST contain the .txt files.
 
-Sample questions to try (over the email corpus)
+Sample questions to try (over the Wikipedia corpus)
 -----------------------------------------------
-    "What was the status of the government project going into 2015?"
-        -> Grounded answer: The project had been put on hold/paused.
-    "Who was involved in discussions about restarting the government project?"
-        -> Names people from the emails (e.g., the Finance Director and COO).
-    "What is the CEO's home phone number?"
-        -> This is NOT in the emails, so the assistant should refuse rather than guess.
-Compare the retrievers on the same questions: Keyword (1.2) is strong on exact terms,
-vector (2.1) handles paraphrases, and hybrid (2.2) combines both.
+    "who was incumbent in 2022 election?"
+        -> Grounded answer: The incumbent president in the 2022 elections was Joe Biden (D). (Source: 2022_US_elections.txt)
+    "What were the main issues for the 2022 election?"
+        ->  1. **Economy**: High consumer prices, inflation, and gas prices were significant concerns for voters, with Republicans blaming Biden's policies and Democrats linking them to global factors, including the COVID-19 pandemic and the Russian invasion of Ukraine.
+
+            2. **Abortion**: Following the Supreme Court's ruling in Dobbs v. Jackson Women's Health Organization, abortion became a major issue, influencing several elections and driving Democratic voter turnout.
+
+            3. **Crime and Gun Violence**: Mass shootings and rising crime rates contributed to voter concerns, with Republicans emphasizing crime rates and Democrats advocating for gun safety laws.
+
+            4. **Democracy**: The integrity of democratic institutions and threats posed by election deniers and authoritarianism were highlighted by Democrats as key themes in their campaigns.
+
+            5. **Climate Change**: Climate change emerged as a significant issue, with a majority of voters considering it a serious problem and some candidates actively campaigning on climate-related policies (source: 2022_US_elections.txt).
+    "When did Howdy Modi happend in Taxas?"
+        -> The provided articles do not contain information about "Howdy Modi" in Texas. Therefore, I cannot answer your question.
 """
 import os
 import re
@@ -53,16 +70,16 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 LLM_MODEL = "openai/gpt-4o-mini"  # free; "openai/gpt-4o-mini" (paid, cheap) also good
 TOP_K = 5
 
-SYSTEM_PROMPT = """You are a helpful assistant for Precision Paperclip Inc. \
-You answer questions by drawing information exclusively from the company e-mails \
+SYSTEM_PROMPT = """You are a helpful assistant for Political Survey Inc. \
+You answer questions by drawing information exclusively from the wikipedia articles \
 provided to you as context in each message.
 
 Rules:
-- If the answer can be found in the provided e-mails, answer clearly and concisely.
-- If the provided e-mails do not contain enough information to answer the question, \
+- If the answer can be found in the provided wikipedia articles, answer clearly and concisely.
+- If the provided articles do not contain enough information to answer the question, \
 say so explicitly and do not speculate or use outside knowledge.
-- Do not answer questions that are unrelated to the content of the provided e-mails."""
-
+- Cite the source filename in your answer using the filename shown in the context.
+- Do not answer questions that are unrelated to the content of the provided wikipedia articles."""
 
 def require_api_key() -> None:
     """Exit early with a clear message if OPENROUTER_API_KEY is not set instead of
@@ -80,7 +97,7 @@ def require_api_key() -> None:
 
 # ─── Provided: command-line chat loop ────────────────────────────────
 def chat_loop(response):
-    print("Chat over the email DB. Type your question; 'exit'/'quit' to stop.\n")
+    print("Chat over the wikipedia articles. Type your question; 'exit'/'quit' to stop.\n")
     while True:
         user_input = input("You: ").strip()
         if user_input.lower() in {"exit", "quit"}:
@@ -113,7 +130,7 @@ class BaseRetriever(ABC):
         """Return a string of context retrieved for the given query."""
 
     def _build_user_message(self, query: str, context: str) -> str:
-        return f"Context (e-mails):\n{context}\n\nQuestion: {query}"
+        return f"Context (wikipedia articles):\n{context}\n\nQuestion: {query}"
 
     def query(self, question: str) -> str:
         context = self.retrievedContext(question)
@@ -154,23 +171,14 @@ _STOPWORDS = {
 
 
 def tokenize(text: str) -> list[str]:
-    """Turn text into BM25 keywords. The SAME tokenizer indexes documents and
-    tokenizes queries, so it must be consistent for both.
-
-    TODO (Step 1): Lowercase the text, split into alphanumeric tokens, and delete
-    the stopwords found in _STOPWORDS. Return the remaining tokens.
-    (Hint: re.findall(r"[a-z0-9]+", text.lower()) gives lowercase tokens.)
-
-    Delete the raise NotImplementedError line once your code works.
-    """
     return [token for token in re.findall(r"[a-z0-9]+", text.lower()) if token not in _STOPWORDS]
 
 
 class Bm25Retriever(BaseRetriever):
-    def __init__(self, emails_dir: str, top_k: int = TOP_K, **kwargs):
+    def __init__(self, wiki_dir: str, top_k: int = TOP_K, **kwargs):
         super().__init__(**kwargs)
         paths = sorted(
-            os.path.join(emails_dir, f) for f in os.listdir(emails_dir) if f.endswith(".txt")
+            os.path.join(wiki_dir, f) for f in os.listdir(wiki_dir) if f.endswith(".txt")
         )
         self._paths = [os.path.basename(p) for p in paths]
         self._contents = []
@@ -179,17 +187,9 @@ class Bm25Retriever(BaseRetriever):
                 self._contents.append(fh.read())
         self._bm25 = BM25Okapi([tokenize(doc) for doc in self._contents])
         self._top_k = top_k
-        print(f"Indexed {len(self._paths)} emails.")
+        print(f"Indexed {len(self._paths)} wikipedia articles.")
 
-    def getTopK(self, query: str, k: int) -> list[tuple[str, str, float]]:
-        """Return the k best-matching emails as (filename, content, score).
-
-        TODO (Step 2): Tokenize the query, score every document with
-        self._bm25.get_scores(tokens), and return the top-k as
-        (self._paths[i], self._contents[i], scores[i]).
-
-        Delete the raise NotImplementedError line once your code works.
-        """
+    def getTopK(self, query: str, k: int) -> list[tuple[str, str, float]]:        
         tokens = tokenize(query)
         scores = self._bm25.get_scores(tokens)
         ranked_indices = sorted(
@@ -201,12 +201,6 @@ class Bm25Retriever(BaseRetriever):
         ]
 
     def retrievedContext(self, query: str) -> str:
-        """Join the top self._top_k results into one context string, each labeled
-        '[filename]\\n<content>' and separated by dividers.
-
-        TODO (Step 3). Delete the raise NotImplementedError line once it works.
-        """
-        #raise NotImplementedError("Implement retrievedContext() — see the TODO above.")
         results = self.getTopK(query, self._top_k)
         return "\n\n---\n\n".join(
             f"[{filename}]\n{content}" for filename, content, _ in results
@@ -214,5 +208,5 @@ class Bm25Retriever(BaseRetriever):
 
 if __name__ == "__main__":
     require_api_key()
-    emails_dir = sys.argv[1] if len(sys.argv) > 1 else "detailedEmails"
-    Bm25Retriever(emails_dir=emails_dir).chat()
+    wiki_dir = sys.argv[1] if len(sys.argv) > 1 else "WikiFiles"
+    Bm25Retriever(wiki_dir=wiki_dir).chat()
