@@ -1,35 +1,69 @@
 """Lab 2.2 (SOLUTION) — hybrid retrieval: fuse BM25 keyword + vector search.
 
-Run:  python lab_2_2_hybrid_retrieval_solution.py <WikiFiles>
+The answers are shown in the console from BM25, Vector and hybrid retrieval as the same time
+The hybrid retriever combines the two rankings so you get the best of each.
 
-Keyword search (Lab 1.2) covers exact terms; vector search (Lab 2.1) covers
-paraphrases. Hybrid retrieval runs both and combines their rankings so you get the
+Developer: Gaurav Singh, 08/31/2026
+git- https://github.com/merasupermarket/RAG-WITH-MIT-XPRO
+
+Setup
+-----
+1. Create directory 'WikiFiles' and place the Wikipedia text files (one .txt per article) in it. 
+2. for this lab, you can use the provided Apollo_11.txt file. 
+3. You can also extract more Wikipedia articles using the provided WikiExtract.py script.
+4. Ensure that you have completed the program's one-time environment and
+   OpenRouter API key setup, and activate the configured environment.
+5. Install any additional dependencies required for this lab, if they are
+   not already available:
+       pip install python-dotenv langchain-openai langchain-core langchain-chroma rank-bm25  
+6. The vector DB is persisted to ./chroma_db (delete it to rebuild).
+
+Run:  python lab_2_2_hybrid_retrieval_starter.py 
+
+How it works 
+-----------
+Hybrid retrieval runs both and combines their rankings so you get the
 best of each. However, BM25 scores are "higher = better", and Chroma returns a
 DISTANCE where "lower = better". So the trick to combining them is to normalize each to [0,1] and INVERT the
 vector side before taking a weighted sum.
 
-Setup
------
-1. Ensure that you have completed the program's one-time environment and
-   OpenRouter API key setup, and activate the configured environment.
-2. Install any additional dependencies required for this lab, if they are
-   not already available:
-       pip install python-dotenv langchain-openai langchain-core langchain-chroma rank-bm25  
-3. Email data: Place the company email files (one .txt per email) in a folder
-   named 'detailedEmails' in this directory, or pass a folder path as the first
-   argument. The folder MUST contain the .txt files.
-The vector DB is persisted to ./chroma_db (delete it to rebuild).
 
 Sample questions to try (example expected behavior)
 -----------------------------------------------
-    "What was the status of the government project going into 2015?"
-        -> Grounded answer: the project had been put on hold / paused.
-    "Who was involved in discussions about restarting the government project?"
-        -> Names people from the emails (e.g., the Finance Director and COO).
-    "What is the CEO's home phone number?"
-        -> This is NOT in the emails, so the assistant should refuse rather than guess.
-Compare the retrievers on the same questions: Keyword (1.2) is strong with exact terms,
-vector (2.1) handles paraphrases, hybrid (2.2) combines both.
+    "who was the head of the state when men landed on moon?"
+        -> Grounded answer: The head of state at the time the Apollo 11 crew landed on the Moon (20 July 1969) was **President Richard Nixon**
+    "When did Apollo One failed?"
+        -> Provides the date of the failure.
+    " How many days passed between the selection of lunar orbit rendezvous as the Apollo mission mode and the fatal fire during the launchpad test?"
+        -> The Apollo program officially adopted **lunar‑orbit rendezvous (LOR)** as its mission mode in **July 1962** when NASA’s James Webb announced that the new approach would be used【Apollo 11.txt†L384-L389】.  
+        A little more than four and a half years later the program was halted by the **Apollo 1 launch‑pad fire on 27 January 1967**, which killed the crew of Grissom, White and Chaffee【Apollo 11.txt†L436-L442】.  
+            Counting the days from 1 July 1962 (the first day of the month in which LOR was announced) to 27 January 1967 gives:
+
+            * 1 Jul 1962 → 1 Jul 1963 = 365 days  
+            * 1 Jul 1963 → 1 Jul 1964 = 366 days (leap year)  
+            * 1 Jul 1964 → 1 Jul 1965 = 365 days  
+            * 1 Jul 1965 → 1 Jul 1966 = 365 days  
+            * 1 Jul 1966 → 27 Jan 1967 = 210 days  
+
+            **Total = 365 + 366 + 365 + 365 + 210 = 1,671 days**
+
+            So **1,671 days** elapsed between the selection of LOR as the Apollo mission mode and the fatal Apollo 1 fire
+            
+    *****************************************************
+    ****Compare the retrievers on the same questions*****
+    *****************************************************
+
+        -> what was the height of Saturn V?
+
+        Answer from BM25
+        : The provided Apollo 11 WikiFile does not include the height of the Saturn V launch vehicle.
+
+        Answer from Vector
+        : The Saturn V rocket used for Apollo 11 was **363 feet (about 111 meters) tall**.
+
+        Answer from Hybrid
+        : The provided Apollo 11 WikiFile does not include the height of the Saturn V launch vehicle.
+
 """
 import os
 import re
@@ -49,6 +83,7 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 LLM_MODEL = "openai/gpt-oss-120b"
 EMBEDDING_MODEL = "openai/text-embedding-3-small"
 CHROMA_DIR = "chroma_db"
+TOP_K = 5
 NUM_RETRIEVED = 4          # WikiFiles sent to the LLM as context.
 CANDIDATE_POOL = 10        # Candidates pulled from EACH retriever before fusion.
 WEIGHT_BM25 = 0.5
@@ -80,7 +115,7 @@ def require_api_key() -> None:
 
 
 def chat_loop(response):
-    print("Chat over the email DB. Type your question; 'exit'/'quit' to stop.\n")
+    print("Chat over the WikiFiles. Type your question; 'exit'/'quit' to stop.\n")
     while True:
         user_input = input("You: ").strip()
         if user_input.lower() in {"exit", "quit"}:
@@ -153,8 +188,8 @@ def tokenize(text: str) -> list[str]:
     return [t for t in re.findall(r"[a-z0-9]+", text.lower()) if t not in _STOPWORDS]
 
 
-# ─── Vector side (from Lab 2.1) ──────────────────────────────────────
-def get_embeddings() -> OpenAIEmbeddings:
+# ─── Vector side  ──────────────────────────────────────
+def get_embeddings_model() -> OpenAIEmbeddings:
     return OpenAIEmbeddings(
         model=EMBEDDING_MODEL,
         api_key=os.environ["OPENROUTER_API_KEY"],
@@ -165,7 +200,7 @@ def get_embeddings() -> OpenAIEmbeddings:
 def build_or_load_db(WikiFiles: str, chroma_dir: str = CHROMA_DIR) -> Chroma:
     if os.path.isdir(chroma_dir) and os.listdir(chroma_dir):
         print(f"Loading existing vector DB from {chroma_dir}/")
-        return Chroma(persist_directory=chroma_dir, embedding_function=get_embeddings())
+        return Chroma(persist_directory=chroma_dir, embedding_function=get_embeddings_model())
     print("Building vector DB (first run — embedding the WikiFiles)...")
     docs = []
     for fname in sorted(os.listdir(WikiFiles)):
@@ -173,7 +208,7 @@ def build_or_load_db(WikiFiles: str, chroma_dir: str = CHROMA_DIR) -> Chroma:
             continue
         with open(os.path.join(WikiFiles, fname), encoding="utf-8", errors="replace") as fh:
             docs.append(Document(page_content=fh.read(), metadata={"source": fname}))
-    db = Chroma.from_documents(docs, get_embeddings(), persist_directory=chroma_dir)
+    db = Chroma.from_documents(docs, get_embeddings_model(), persist_directory=chroma_dir)
     print(f"  Indexed {len(docs)} WikiFiles into {chroma_dir}/")
     return db
 
@@ -191,9 +226,42 @@ def _normalize(scores: list[float], invert: bool = False) -> list[float]:
     return [1.0 - n for n in norm] if invert else norm
 
 
+class Bm25Retriever(BaseRetriever):
+    def __init__(self, wiki_dir: str, top_k: int = TOP_K, **kwargs):
+        super().__init__(**kwargs)
+        paths = sorted(
+            os.path.join(wiki_dir, f) for f in os.listdir(wiki_dir) if f.endswith(".txt")
+        )
+        self._paths = [os.path.basename(p) for p in paths]
+        self._contents = []
+        for p in paths:
+            with open(p, encoding="utf-8", errors="replace") as fh:
+                self._contents.append(fh.read())
+        self._bm25 = BM25Okapi([tokenize(doc) for doc in self._contents])
+        self._top_k = top_k
+        print(f"Indexed {len(self._paths)} wikipedia articles.")
+
+    def getTopK(self, query: str, k: int) -> list[tuple[str, str, float]]:        
+        tokens = tokenize(query)
+        scores = self._bm25.get_scores(tokens)
+        ranked_indices = sorted(
+            range(len(scores)), key=lambda index: scores[index], reverse=True
+        )[:k]
+        return [
+            (self._paths[index], self._contents[index], scores[index])
+            for index in ranked_indices
+        ]
+
+    def retrievedContext(self, query: str) -> str:
+        results = self.getTopK(query, self._top_k)
+        return "\n\n---\n\n".join(
+            f"[{filename}]\n{content}" for filename, content, _ in results
+        )
+
 class HybridRetriever(BaseRetriever):
     def __init__(self, WikiFiles: str, db: Chroma, **kwargs):
         super().__init__(**kwargs)
+        self._keyword_retriever = Bm25Retriever(wiki_dir=WikiFiles, top_k=TOP_K, **kwargs)
         # Keyword index over the same WikiFiles (kept in memory).
         paths = sorted(
             os.path.join(WikiFiles, f) for f in os.listdir(WikiFiles) if f.endswith(".txt")
@@ -206,6 +274,49 @@ class HybridRetriever(BaseRetriever):
         self._bm25 = BM25Okapi([tokenize(doc) for doc in self._contents])
         self._db = db
         print(f"Hybrid retriever ready over {len(self._paths)} WikiFiles.")
+
+    def chat(self) -> None:
+        print("Chat over the WikiFiles. Type your question; 'exit'/'quit' to stop.\n")
+        while True:
+            user_input = input("You: ").strip()
+            if user_input.lower() in {"exit", "quit"}:
+                print("Goodbye.")
+                break
+            if not user_input:
+                continue
+
+            keyword_context = self._keyword_retriever.retrievedContext(user_input)
+            hybrid_context = self.retrievedContext(user_input)
+            vector_context = self._vector_context(user_input)
+
+            #print("\nBM25 results:\n")
+            #print(keyword_context)
+            #print("\nVector results:\n")
+            #print(vector_context)
+            #print("\nHybrid results:\n")
+            #print(hybrid_context)
+
+            bm25_answer = self._keyword_retriever.query(user_input)
+            vector_answer = self._answer_from_context(user_input, vector_context)
+            hybrid_answer = self.query(user_input)
+
+            print(f"\nAnswer from BM25\n: {bm25_answer}\n")
+            print(f"\nAnswer from Vector\n: {vector_answer}\n")
+            print(f"\nAnswer from Hybrid\n: {hybrid_answer}\n")
+
+    def _answer_from_context(self, question: str, context: str) -> str:
+        messages = [
+            SystemMessage(content=SYSTEM_PROMPT),
+            HumanMessage(content=self._build_user_message(question, context)),
+        ]
+        response = self._llm.invoke(messages)
+        return response.content if hasattr(response, "content") else str(response)
+
+    def _vector_context(self, query: str) -> str:
+        docs = self._db.similarity_search(query, k=NUM_RETRIEVED)
+        return "\n\n---\n\n".join(
+            f"[{d.metadata.get('source', 'unknown')}]\n{d.page_content}" for d in docs
+        )
 
     def _bm25_topk(self, query: str, k: int) -> list[tuple[str, str, float]]:
         scores = self._bm25.get_scores(tokenize(query))
