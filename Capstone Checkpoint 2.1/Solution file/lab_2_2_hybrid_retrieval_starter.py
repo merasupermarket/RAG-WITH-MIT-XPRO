@@ -97,6 +97,7 @@ Rules:
 - If the answer can be found in the provided WikiFiles, answer clearly and concisely.
 - If the provided WikiFiles do not contain enough information to answer the question, \
 say so explicitly and do not speculate or use outside knowledge.
+- Cite the source filename in your answer using the filename shown in the context.
 - Do not answer questions that are unrelated to the content of the provided WikiFiles."""
 
 

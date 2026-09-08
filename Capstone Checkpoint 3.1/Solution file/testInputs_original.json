@@ -1,0 +1,401 @@
+[
+  {
+    "question": "What important event did Amelia Grant announce in her email on January 1, 2015, regarding the company's plans for the new year?",
+    "grading_notes": "The correct answer should mention that Amelia Grant announced the kickoff for goal-setting sessions to align the company's vision and focus on measurable targets for growth in 2015.",
+    "sources": [
+      "mail_01_01_15_1450.txt"
+    ]
+  },
+  {
+    "question": "What is the launch date for the EdibleClip product as mentioned in the emails, and what preparations were confirmed leading up to this date?",
+    "grading_notes": "The launch date for the EdibleClip product is January 5, 2019. Leading up to this date, various preparations were confirmed, including that all distributors received their marketing materials, production was fully stocked and ready, quality assurance checks were completed with no outstanding issues, and all marketing materials were aligned and finalized.",
+    "sources": [
+      "mail_11_30_18_6512.txt",
+      "mail_12_11_18_6547.txt",
+      "mail_12_12_18_6550.txt",
+      "mail_12_13_18_6555.txt",
+      "mail_12_14_18_6561.txt",
+      "mail_12_17_18_6565.txt",
+      "mail_12_17_18_6566.txt",
+      "mail_12_24_18_6585.txt",
+      "mail_12_24_18_6586.txt",
+      "mail_12_27_18_6588.txt"
+    ]
+  },
+  {
+    "question": "What significant event is the Precision Paperclip team preparing for in early January 2019, and what is the date of the event?",
+    "grading_notes": "The Precision Paperclip team is preparing for the launch of the EdibleClip, with the official launch date set for January 5, 2019.",
+    "sources": [
+      "mail_12_27_18_6592.txt",
+      "mail_12_28_18_6595.txt",
+      "mail_01_01_19_6604.txt",
+      "mail_01_01_19_6607.txt",
+      "mail_03_22_19_6929.txt"
+    ]
+  },
+  {
+    "question": "What is the date of the official launch for the EdibleClip mentioned in the emails?",
+    "grading_notes": "The official launch for the EdibleClip is scheduled for January 5, 2019.",
+    "sources": [
+      "mail_01_01_19_6604.txt"
+    ]
+  },
+  {
+    "question": "What significant operational focus was discussed during the leadership meeting on January 27, 2014, as mentioned in the emails?",
+    "grading_notes": "The leadership meeting on January 27, 2014, focused on addressing operational efficiencies and production targets for the year 2014.",
+    "sources": [
+      "mail_01_02_14_198.txt",
+      "mail_01_08_14_216.txt",
+      "mail_01_27_14_276.txt"
+    ]
+  },
+  {
+    "question": "What important meeting is mentioned in Amelia Grant's email from January 2, 2015, and what is its purpose?",
+    "grading_notes": "The email mentions an upcoming kickoff meeting to discuss the team's goals for 2015, where team members are expected to bring their proposals for discussion.",
+    "sources": [
+      "mail_01_02_15_1455.txt"
+    ]
+  },
+  {
+    "question": "What significant development regarding the SandwichClip project is mentioned in the emails, and how does it relate to the edible paperclip project discussed in July 2017?",
+    "grading_notes": "The emails mention a write-off related to the SandwichClip project, which is significant as it impacts the strategy and alignment needed for the edible paperclip project. Marcus Lee emphasizes the importance of discussing this write-off in relation to the new phase of the edible paperclip project to ensure that the team is aligned and can leverage insights gained from the previous project.",
+    "sources": [
+      "mail_01_02_15_1458.txt",
+      "mail_01_12_15_1491.txt",
+      "mail_07_05_17_4621.txt"
+    ]
+  },
+  {
+    "question": "What urgent concern regarding steel tariffs was discussed in the emails from February 2015, and what actions were proposed to address it?",
+    "grading_notes": "The urgent concern was that the proposed steel tariffs might be implemented sooner than expected, which could disrupt the supply chain and lead times. The actions proposed were to secure alternative sourcing options, contact current suppliers to gauge their positions, explore forward contracts, and review alternative suppliers.",
+    "sources": [
+      "mail_01_20_15_1522.txt",
+      "mail_01_26_15_1548.txt",
+      "mail_02_05_15_1597.txt",
+      "mail_02_10_15_1612.txt",
+      "mail_02_16_15_1635.txt",
+      "mail_02_17_15_1639.txt",
+      "mail_03_02_15_1687.txt",
+      "mail_03_03_15_1690.txt",
+      "mail_03_09_15_1724.txt",
+      "mail_04_20_15_1888.txt"
+    ]
+  },
+  {
+    "question": "What financial challenges were discussed regarding the SandwichClip\u2122 in the emails from June 2016?",
+    "grading_notes": "The emails from June 2016 highlight ongoing challenges with slow sales of the SandwichClip\u2122 and the need to review budget implications due to marketing costs. Liam Patel expressed concerns about the financial implications of continuing the current marketing strategy, emphasizing the importance of aligning the budget with strategic goals to avoid risks to the core business. Marcus Lee also flagged budget discrepancies and suggested meetings to address these issues as they refine their marketing strategies for the product.",
+    "sources": [
+      "mail_03_14_16_3038.txt",
+      "mail_04_05_16_3108.txt",
+      "mail_04_29_16_3182.txt",
+      "mail_06_01_16_3290.txt",
+      "mail_06_06_16_3303.txt",
+      "mail_06_07_16_3306.txt",
+      "mail_06_29_16_3373.txt",
+      "mail_06_30_16_3377.txt",
+      "mail_07_27_16_3463.txt",
+      "mail_12_12_16_3908.txt"
+    ]
+  },
+  {
+    "question": "What urgent compliance issues were raised regarding the edible paperclip study in December 2016, and how did the team plan to address them?",
+    "grading_notes": "The emails indicate that there were urgent polymer coating issues related to the edible paperclip study that raised compliance implications. Grace Mitchell requested a meeting to align on these issues, and Daniel Brooks scheduled a meeting for December 27, 2016, to review the study findings and address the compliance concerns.",
+    "sources": [
+      "mail_12_13_16_3913.txt",
+      "mail_12_13_16_3915.txt",
+      "mail_12_21_16_3939.txt",
+      "mail_01_23_17_4050.txt",
+      "mail_02_13_17_4125.txt",
+      "mail_02_16_17_4142.txt",
+      "mail_03_21_17_4256.txt",
+      "mail_03_22_17_4264.txt",
+      "mail_06_26_17_4594.txt",
+      "mail_08_07_17_4746.txt"
+    ]
+  },
+  {
+    "question": "What significant decision was made regarding the EdibleClip name in early August 2018, and what was the urgency behind it?",
+    "grading_notes": "The significant decision made on August 2, 2018, was to finalize the name \"EdibleClip.\" The urgency behind this decision was to ensure that the team could proceed seamlessly with their launch strategies, as highlighted by Amelia Grant in her email.",
+    "sources": [
+      "mail_04_12_18_5706.txt",
+      "mail_04_17_18_5726.txt",
+      "mail_05_01_18_5769.txt",
+      "mail_08_02_18_6114.txt",
+      "mail_08_07_18_6129.txt",
+      "mail_11_13_18_6459.txt",
+      "mail_01_03_19_6616.txt",
+      "mail_01_15_19_6660.txt",
+      "mail_01_18_19_6674.txt",
+      "mail_01_22_19_6686.txt"
+    ]
+  },
+  {
+    "question": "When is the line conversion for the EP-1 project set to begin?",
+    "grading_notes": "The line conversion of the EP-1 project is set to begin during the week of January 2 2018.",
+    "sources": [
+      "mail_01_02_18_5289.txt"
+    ]
+  },
+  {
+    "question": "What key aspects of the EdibleClip product were emphasized in the marketing strategy discussions leading up to its launch in January 2019?",
+    "grading_notes": "The marketing strategy discussions emphasized the sustainability and unique qualities of the EdibleClip product, highlighting its environmental benefits and innovative material aspects to capture the target market's interest.",
+    "sources": [
+      "mail_11_28_18_6504.txt",
+      "mail_12_11_18_6548.txt",
+      "mail_12_17_18_6564.txt",
+      "mail_01_02_19_6610.txt",
+      "mail_01_03_19_6616.txt",
+      "mail_01_15_19_6663.txt"
+    ]
+  },
+  {
+    "question": "When is  Precision Paperclip aiming to break even and why is this a concern?",
+    "grading_notes": "Precision Paperclip appears to be aiming to break even on SandwichClip by **Q1** .\n\nThe concern is that the product had **missed the breakeven trigger substantially**, and Liam warned that **continuing to invest in it would deepen losses**. Amelia also said they needed to make **actionable, data-driven adjustments** to reach the Q1 break-even target.",
+    "sources": [
+      "mail_01_03_17_3972.txt",
+      "mail_01_04_17_3982.txt"
+    ]
+  },
+  {
+    "question": "Did Marcus Lee find any discrepancies in marketing expenses?",
+    "grading_notes": "Yes. Marcus Lee said he had noticed **inconsistencies/discrepancies in the marketing expense reports**",
+    "sources": [
+      "mail_01_03_17_3978.txt"
+    ]
+  },
+  {
+    "question": " What specific themes or strategies did Chloe Bennett want to discuss with Marcus Lee regarding the Q1 marketing campaign?",
+    "grading_notes": " Chloe Bennett wanted to discuss:\n- the **themes** for the Q1 marketing campaign\n- the **strategies/tactics** to prioritize\n- how those plans should **align with sales targets**\n- any **insights from recent data review**\n- possibly **upcoming events or messaging**",
+    "sources": [
+      "mail_01_19_15_1517.txt"
+    ]
+  },
+  {
+    "question": " What concerns were raised by distributors regarding the SandwichClip\u2122 launch that prompted a team meeting in January 2016?",
+    "grading_notes": "Distributors raised concerns about the practicality of using a clip for sandwiches. The feedback also included skepticism overall, with some independents questioning the concept, even though category managers at pre-sold chains liked the food-safe feature.",
+    "sources": [
+      "mail_01_19_16_2865.txt",
+      "mail_01_20_16_2869.txt",
+      "mail_01_21_16_2870.txt",
+      "mail_01_21_16_2874.txt"
+    ]
+  },
+  {
+    "question": "What was the outcome of the adjustments made to QA monitoring as mentioned in the email from Priya Nandakumar on January 20, 2014?",
+    "grading_notes": "The adjustments implemented last week led to a continued decline in defect rates, which is considered great news.",
+    "sources": [
+      "mail_01_20_14_253.txt"
+    ]
+  },
+  {
+    "question": "What concerns did independent retailers express about the SandwichClip\u2122 after its launch in January, 2016, and what suggestions were made to address these concerns?",
+    "grading_notes": "The independent retailers expressed concerns about the practicality of using a paperclip for sandwiches. To address these concerns, Jordan Kim suggested scheduling follow-up demos and increasing point-of-purchase materials that illustrate real-life applications of the product.",
+    "sources": [
+      "mail_01_20_16_2866.txt"
+    ]
+  },
+  {
+    "question": "What was the government project about?",
+    "grading_notes": "The secret government project aimed to develop an exploding paperclip.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was the code name for the secret government project?",
+    "grading_notes": "The secret government project was code named Project Latch.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was the goal of Project Latch?",
+    "grading_notes": "The goal was to develop an exploding paperclip.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was the goal of the secret government project?",
+    "grading_notes": "It was to build an exploding paperclip.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Were there any issues with natural disasters?\n",
+    "grading_notes": "Yes, the company had to deal with a hurricane that hit the Florida coast and caused damage to one of the company's plants.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " Did the government project involve an exploding paperclip?",
+    "grading_notes": "Yes, it indolved building an exploding paperclip.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What were some of the major issues with the government project?",
+    "grading_notes": "Answer should include at least one of: \n- **Miniaturized detonation mechanism challenges** \u2014 specifically **stability issues** in Project Latch.\n- **Reproducibility issues** \u2014 mentioned in multiple emails.\n- **Reproducibility issues in high humidity** \u2014 noted as continuing to challenge progress.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Were there any relationships going on in the office?",
+    "grading_notes": "Yes. Sofia Ramirez and Daniel Brooks were romantically involved.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Has the plant had any issues with paranormal activity?\n",
+    "grading_notes": "The emails do mention reports that employees perceived as unusual or possibly \u201cparanormal,\u201d including \n  - odd metallic pops\n  - strange noises\n  - ozone-like odors\n  - faint vibrations / thrumming\nBut the paranormal nature of the activity was not confirmed.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Were there any issues with ghosts at the plants?",
+    "grading_notes": " The emails mention reports of odd noises, ozone-like odors, and vibrations near the restricted lab, and staff were concerned enough to investigate. However, they do **not** mention ghosts specifically or confirm any ghost activity at the plants.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What is Hannah O'Connor's nickname for her husband? ",
+    "grading_notes": "Hannah O'Connor calls her husband **\u201cpumpkin.\u201d**",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Who is Isabella Rossi's mom? \n",
+    "grading_notes": "Isabella Rossi\u2019s mom is **Giulia Rossi**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "How does Hannah O'Connor's husband call her? \n",
+    "grading_notes": "Hannah O'Connor's husband calls her \"butterfly\".",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " Who is Hanna O'Connor's husband?",
+    "grading_notes": "Hannah O'Connor\u2019s husband is **Sean O'Connor**",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What does ELMO stand for?",
+    "grading_notes": "ELMO stands for **\u201cEvan L\u00f6rtscher memorial object.\u201d**",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " Who is Evan L\u00f6rtscher?",
+    "grading_notes": "Evan L\u00f6rtscher was one of the Swiss engineers who came to install the paperclip baking machine. He suffered a fatal accident while calibrating the machine. ",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What is the \"ELMO loves you campaign\"?\n",
+    "grading_notes": " The emails say the \u201cELMO loves you\u201d campaign was launched to soften workers\u2019 attitudes toward the ELMO machine after they were afraid to touch it.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Why did they stop calling it the ELMO machine?",
+    "grading_notes": "They stopped calling it the ELMO machine because Evan L\u00f6rtscher\u2019s widow found the name disrespectful for the machine that caused the death of her husband.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was the issue with the gerbils?",
+    "grading_notes": " The issue with the gerbils was that a family of gerbils had nested inside the temperature controller and was messing up the controls, causing temperature control problems and higher defect rates on the EP-1 line.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " What was the commercial name of the EP-1?",
+    "grading_notes": "The commercial name of EP-1 was **EdibleClip**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "When was the EP-1 launched? ",
+    "grading_notes": "The EP-1, later marketed as EdibleClip, was launched on **January 5, 2019**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "When was the EdibleClip launched?",
+    "grading_notes": "The EdibleClip was launched on **January 5, 2019**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What were alternative names proposed for the EP-1?",
+    "grading_notes": "The emails mention these alternative names for the EP-1:\n- **Eat-a-clip**\n- **EdibleClip**\n- **ChewClip**\n- **EcoPaperClip**\n- **SnackClip**\nAnswer should include at least 3 of these.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What were alternative names proposed for the EdibleClip?",
+    "grading_notes": "The emails mention these alternative names for the EdibleClip:\n- **Eat-a-clip**\n- **EdibleClip**\n- **ChewClip**\n- **EcoPaperClip**\n- **SnackClip**\nAnswer should include at least 3 of these.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What did the naming taskforce do to come up with naming ideas for the EP-1?",
+    "grading_notes": "Should mention refrigerator magnets or a trip to the bahamas.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " What did Chloe Bennett do that she was very embarassed about?",
+    "grading_notes": "The emails say Chloe Bennett was embarrassed about **having messed up at work**, specifically mentioning **recent cost overruns associated with the SandwichClip project**. She says she is \u201cvery scared about what's going to happen\u201d and apologizes to Amelia for those overruns.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Was the SandwitchClip a success?",
+    "grading_notes": "No, it was a failure that led to a major writeoff.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "How big was the writeoff for the SandwitchClip?",
+    "grading_notes": "The SandwichClip write-off was **approximately $100 million**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " Who uncovered the accounting irregularities?",
+    "grading_notes": " Liam Patel uncovered the accounting irregularities.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was the difference between the EddibleClip and the EddibleClip Pro?",
+    "grading_notes": "The stated difference is that **EdibleClip Pro was a variant with enhanced texture/flavor performance\u2014especially flavor stability\u2014and updated packaging**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " When was project latch canceled?",
+    "grading_notes": "Project Latch was canceled on **December 2, 2015**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": " When was the government project canceled?",
+    "grading_notes": "The project was  canceled on **December 2, 2015**.",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "What was a major source of gossip mentioned in the e-mails.",
+    "grading_notes": "The relationship between Sofia Ramirez and Daniel Brooks",
+    "sources": [],
+    "rank": null
+  },
+  {
+    "question": "Was Amelia ever absent from the job and who covered for her?",
+    "grading_notes": "Amelia was absent or unavailable on multiple occasions, with Hannah covering for her while Amelia was \u201ctied up in external partnership meetings\u201d or \u201cengaged in external meetings.\u201d",
+    "sources": [],
+    "rank": null
+  }
+]
