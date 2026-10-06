@@ -130,7 +130,7 @@ APPROX_PRICE_PER_MTOK = {
     "openai/gpt-5.4-mini": {"input": 0.20, "output": 0.80},
 }
 
-_FILENAME_RE = re.compile(r"^mail_(\d{2})_(\d{2})_(\d{2})_\d+\.txt$")
+_FILENAME_RE = re.compile(r"^wiki_(\d{2})_(\d{2})_(\d{2})_\d+\.txt$")
 
 ANSWER_SYSTEM = """You are a research assistant for Wiki Files. \
 Answer questions exclusively from the company Wiki Files provided as context. Consider \
