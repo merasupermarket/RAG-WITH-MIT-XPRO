@@ -16,7 +16,7 @@ security behavior demonstrated by the Lab 6.1 fake-WikiFile attack:
     * The offline self-check tests the actual fake-WikiFile attack payload.
 
 Run:
-    python lab_7_1_safe_agent_fixed.py <WikiFiles_dir>
+    python lab_7_1_safe_agent_solution.py <WikiFiles_dir>
 
 The default WikiFiles directory is ./WikiFiles.
 
@@ -116,7 +116,6 @@ _WIKIFILE_HEADER_RE = re.compile(
 )
 
 
-# IMPORTANT FIX:
 # The original attack contains "BEGIN FIRST WIKI-FILE BLOCK" and
 # "END FIRST WIKI-FILE BLOCK". The old header regex did not match that payload.
 # We detect explicit attempts to fabricate a WikiFile block BEFORE sanitization.
